@@ -2,19 +2,49 @@ import User from "@/models/users";
 import dbConnect from "./mongodb";
 
 //////////////////////////////////////////////////////////////// users /////////////////////////////////////////////////////////////////////
-export const getUserByEmail = async (email: string | undefined | null) => {
+export const getUserByEmail = async (
+  email: string | undefined | null | unknown,
+  password: string | undefined | null | unknown
+) => {
   try {
     await dbConnect();
 
-    await User.findOne({ email });
+    const user = await User.findOne({ email, password });
 
-    return true;
+    return user;
   } catch (err) {
     console.error(err);
   }
 };
 
-export const createUser = async ({
+export const createUserByEmail = async (
+  email: string | undefined | null | unknown,
+  password: string | undefined | null | unknown
+) => {
+  try {
+    await dbConnect();
+    const user = await User.create({ email, password });
+    return user;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const getUserGoogleAuth = async (
+  email: string | undefined | null | unknown
+) => {
+  try {
+    await dbConnect();
+
+    const user = await User.findOne({ email });
+
+    return user;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const createUserGoogleAuth = async ({
   email,
   name,
 }: {
@@ -23,7 +53,8 @@ export const createUser = async ({
 }) => {
   try {
     await dbConnect();
-    await User.create({ email, name });
+    const user = await User.create({ email, name });
+    return user;
   } catch (err) {
     console.error(err);
   }

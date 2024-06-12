@@ -1,12 +1,4 @@
-import { Document, Schema, model, models } from "mongoose";
-
-export interface IUser extends Document {
-  email: string;
-  password: number;
-  name: string;
-  isAdmin: false;
-  icon: string;
-}
+import { Schema, model, models } from "mongoose";
 
 const userSchema: Schema = new Schema({
   email: {
@@ -15,9 +7,13 @@ const userSchema: Schema = new Schema({
   },
   password: {
     type: String,
+    require: false,
+    default: "",
   },
   name: {
     type: String,
+    require: false,
+    default: "",
   },
   isAdmin: {
     type: Boolean,
@@ -26,10 +22,10 @@ const userSchema: Schema = new Schema({
   },
   icon: {
     type: String,
-    default: null,
+    default: "",
   },
 });
 
-const User = models.User || model<IUser>("User", userSchema);
+const User = models.User || model("User", userSchema);
 
 export default User;
