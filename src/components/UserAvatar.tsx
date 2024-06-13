@@ -1,5 +1,4 @@
 import { auth } from "@/lib/auth";
-import Image from "next/image";
 
 export default async function UserAvatar() {
   const session = await auth();

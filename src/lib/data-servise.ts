@@ -1,16 +1,15 @@
-import User from "@/models/users";
-import dbConnect from "./mongodb";
+import User, { IUser } from "@/models/users";
+import { WEB_URL } from "./constants";
 
 //////////////////////////////////////////////////////////////// users /////////////////////////////////////////////////////////////////////
-export const getUserByEmail = async (
+export const findUserByEmailAndPass = async (
   email: string | undefined | null | unknown,
   password: string | undefined | null | unknown
 ) => {
   try {
-    await dbConnect();
+    const query = { email, password }; // Start with the email condition
 
-    const user = await User.findOne({ email, password });
-
+    const user = await User.findOne<IUser>(query); // Find one user matching both conditions (if password is provided)
     return user;
   } catch (err) {
     console.error(err);
@@ -22,8 +21,7 @@ export const createUserByEmail = async (
   password: string | undefined | null | unknown
 ) => {
   try {
-    await dbConnect();
-    const user = await User.create({ email, password });
+    const user = await User.create<IUser>({ email, password });
     return user;
   } catch (err) {
     console.error(err);
@@ -34,9 +32,7 @@ export const getUserGoogleAuth = async (
   email: string | undefined | null | unknown
 ) => {
   try {
-    await dbConnect();
-
-    const user = await User.findOne({ email });
+    const user = await User.findOne<IUser>({ email });
 
     return user;
   } catch (err) {
@@ -52,8 +48,7 @@ export const createUserGoogleAuth = async ({
   name: string | undefined | null;
 }) => {
   try {
-    await dbConnect();
-    const user = await User.create({ email, name });
+    const user = await User.create<IUser>({ email, name });
     return user;
   } catch (err) {
     console.error(err);
@@ -65,7 +60,7 @@ export const createUserGoogleAuth = async ({
 /////////////////////////////////////////////// products ////////////////////////////////////////////
 export const getAllProducts = async () => {
   try {
-    const res = await fetch("http://localhost:3000/api/products");
+    const res = await fetch(`${WEB_URL}/api/products`);
     if (!res.ok) {
       throw new Error("problem fetching products");
     }

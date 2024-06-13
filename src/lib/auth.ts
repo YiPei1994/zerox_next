@@ -1,41 +1,13 @@
 import NextAuth, { Session, User } from "next-auth";
 import Google from "next-auth/providers/google";
-import Credentials from "next-auth/providers/credentials";
 
-import {
-  createUserByEmail,
-  createUserGoogleAuth,
-  getUserByEmail,
-  getUserGoogleAuth,
-} from "./data-servise";
+import { createUserGoogleAuth, getUserGoogleAuth } from "./data-servise";
 
 const authConfig = {
   providers: [
     Google({
       clientId: process.env.AUTH_GOOGLE_ID,
       clientSecret: process.env.AUTH_GOOGLE_SECRET,
-    }),
-    Credentials({
-      name: "Email",
-      credentials: {
-        email: { label: "Email", type: "text", placeholder: "test@gmail.com" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials): Promise<User | null> {
-        let user = null;
-        console.log(credentials.email, credentials.password);
-
-        // logic to verify if user exists
-        user = await getUserByEmail(credentials.email, credentials.password);
-
-        if (!user) {
-          throw new Error("User not found.");
-        }
-
-        // return user object with the their profile data
-
-        return user;
-      },
     }),
   ],
   callbacks: {
@@ -54,9 +26,6 @@ const authConfig = {
         return false;
       }
     },
-  },
-  pages: {
-    signIn: "/login",
   },
 };
 
