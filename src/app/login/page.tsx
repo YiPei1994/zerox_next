@@ -1,10 +1,8 @@
 import GoogleSignIn from "./GoogleSignIn";
-import GoogleSignOut from "./GoogleSignOut";
-import SignForm from "./SignForm";
 
 export default function Loginpage() {
   return (
-    <div className="grid place-items-center">
+    <div className="flex-1 flex justify-center items-center">
       <GoogleSignIn />
     </div>
   );

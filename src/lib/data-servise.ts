@@ -2,12 +2,11 @@ import User, { IUser } from "@/models/users";
 import { WEB_URL } from "./constants";
 
 //////////////////////////////////////////////////////////////// users /////////////////////////////////////////////////////////////////////
-export const findUserByEmailAndPass = async (
-  email: string | undefined | null | unknown,
-  password: string | undefined | null | unknown
+export const findUserByEmail = async (
+  email: string | undefined | null | unknown
 ) => {
   try {
-    const query = { email, password }; // Start with the email condition
+    const query = { email }; // Start with the email condition
 
     const user = await User.findOne<IUser>(query); // Find one user matching both conditions (if password is provided)
     return user;
@@ -43,12 +42,14 @@ export const getUserGoogleAuth = async (
 export const createUserGoogleAuth = async ({
   email,
   name,
+  icon,
 }: {
   email: string | undefined | null;
   name: string | undefined | null;
+  icon: string | undefined | null;
 }) => {
   try {
-    const user = await User.create<IUser>({ email, name });
+    const user = await User.create<IUser>({ email, name, icon });
     return user;
   } catch (err) {
     console.error(err);

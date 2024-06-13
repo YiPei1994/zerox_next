@@ -19,7 +19,11 @@ const authConfig = {
         const existingUser = await getUserGoogleAuth(user.email);
 
         if (!existingUser)
-          await createUserGoogleAuth({ email: user.email, name: user.name });
+          await createUserGoogleAuth({
+            email: user.email,
+            name: user.name,
+            icon: user.image,
+          });
 
         return true;
       } catch {

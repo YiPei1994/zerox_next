@@ -5,7 +5,7 @@ export interface IUser extends Document {
   email: string;
   password: string;
   name: string;
-  isAdmin: boolean;
+  admin: string;
   icon: string;
 }
 
@@ -13,25 +13,20 @@ const userSchema: Schema = new Schema({
   email: {
     type: String,
     require: true,
+    unique: true,
   },
   password: {
     type: String,
-    require: false,
-    default: "",
   },
   name: {
     type: String,
-    require: false,
-    default: "",
   },
-  isAdmin: {
-    type: Boolean,
-    required: false,
-    default: false,
+  admin: {
+    type: String,
+    default: "user",
   },
   icon: {
     type: String,
-    default: "",
   },
 });
 
