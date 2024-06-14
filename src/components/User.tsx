@@ -1,30 +1,22 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { auth } from "@/lib/auth";
 
-import GoogleSignOut from "@/app/login/GoogleSignOut";
 import { findUserByEmail } from "@/lib/data-servise";
-import { Badge } from "./ui/badge";
+import Link from "next/link";
+import { HiArrowRightEndOnRectangle } from "react-icons/hi2";
+import UserMini from "./UserMini";
 
 export default async function User() {
   const session = await auth();
   const user = await findUserByEmail(session?.user?.email);
 
-  if (!session) return;
-  return (
-    <div className="flex gap-4 items-center ml-auto py-2 px-4">
-      <Avatar>
-        <AvatarImage src={user ? user?.icon : session?.user?.image} />
-        <AvatarFallback>IC</AvatarFallback>
-      </Avatar>
-
-      <div>
-        <p>
-          Welcome, <span>{user ? user.name : session?.user?.email} </span>
-        </p>
-        {user && <Badge>{user.admin}</Badge>}
+  if (!session)
+    return (
+      <div className="flex gap-4 items-center ml-auto py-2  fixed top-[12%] right-0">
+        <Link href="/login" className="bg-primary text-white p-4 text-2xl">
+          <HiArrowRightEndOnRectangle />
+        </Link>
       </div>
+    );
 
-      <GoogleSignOut />
-    </div>
-  );
+  return <UserMini session={session} user={user} />;
 }

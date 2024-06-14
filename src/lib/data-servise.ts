@@ -1,5 +1,7 @@
 import User, { IUser } from "@/models/user";
 import { WEB_URL } from "./constants";
+import { IExercise } from "@/models/exercise";
+import { ExerciseClient } from "@/types/types";
 
 //////////////////////////////////////////////////////////////// users /////////////////////////////////////////////////////////////////////
 export const findUserByEmail = async (
@@ -9,7 +11,8 @@ export const findUserByEmail = async (
     const query = { email }; // Start with the email condition
 
     const user = await User.findOne<IUser>(query); // Find one user matching both conditions (if password is provided)
-    return user;
+    const data = JSON.parse(JSON.stringify(user));
+    return data;
   } catch (err) {
     console.error(err);
   }
@@ -65,9 +68,9 @@ export const getAllExercises = async () => {
     if (!res.ok) {
       throw new Error("problem fetching exercises");
     }
-    const data = await res.json();
-
-    return data;
+    const result = await res.json();
+    const data = result.data;
+    return data as ExerciseClient[];
   } catch (err) {
     console.error(err);
   }

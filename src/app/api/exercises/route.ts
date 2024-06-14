@@ -6,14 +6,16 @@ export async function GET(req: NextRequest) {
   try {
     const exerciseId = req.nextUrl.searchParams.get("id");
     if (exerciseId) {
-      const exercise = await Exercise.findById(exerciseId);
+      const exercise = JSON.parse(
+        JSON.stringify(await Exercise.findById(exerciseId))
+      );
 
       return NextResponse.json({
         status: "success",
         data: exercise,
       });
     } else {
-      const exercises = await Exercise.find();
+      const exercises = JSON.parse(JSON.stringify(await Exercise.find()));
       return NextResponse.json({
         status: "success",
         results: exercises.length,

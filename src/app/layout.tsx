@@ -27,8 +27,10 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <Navigation />
-        {children}
+        <header className="relative">
+          <Navigation />
+        </header>
+        <main className="pt-[70px]">{children}</main>
       </body>
     </html>
   );
