@@ -8,7 +8,7 @@ import { Badge } from "./ui/badge";
 export default async function User() {
   const session = await auth();
   const user = await findUserByEmail(session?.user?.email);
-  console.log(user);
+
   if (!session) return;
   return (
     <div className="flex gap-4 items-center ml-auto py-2 px-4">

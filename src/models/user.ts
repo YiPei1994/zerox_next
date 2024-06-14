@@ -7,6 +7,7 @@ export interface IUser extends Document {
   name: string;
   admin: string;
   icon: string;
+  createdAt: string;
 }
 
 const userSchema: Schema = new Schema({
@@ -27,6 +28,11 @@ const userSchema: Schema = new Schema({
   },
   icon: {
     type: String,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+    select: false,
   },
 });
 

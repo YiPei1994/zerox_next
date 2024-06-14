@@ -1,4 +1,4 @@
-import User, { IUser } from "@/models/users";
+import User, { IUser } from "@/models/user";
 import { WEB_URL } from "./constants";
 
 //////////////////////////////////////////////////////////////// users /////////////////////////////////////////////////////////////////////
@@ -59,11 +59,11 @@ export const createUserGoogleAuth = async ({
 ////////////////////////////////////////////////// users end //////////////////////////////////////////////
 
 /////////////////////////////////////////////// products ////////////////////////////////////////////
-export const getAllProducts = async () => {
+export const getAllExercises = async () => {
   try {
-    const res = await fetch(`${WEB_URL}/api/products`);
+    const res = await fetch(`${WEB_URL}/api/exercises`);
     if (!res.ok) {
-      throw new Error("problem fetching products");
+      throw new Error("problem fetching exercises");
     }
     const data = await res.json();
 
