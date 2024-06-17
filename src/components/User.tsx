@@ -11,8 +11,8 @@ export default async function User() {
 
   if (!session)
     return (
-      <div className="flex gap-4 items-center ml-auto py-2  fixed top-[12%] right-0">
-        <Link href="/login" className="bg-primary text-white p-4 text-2xl">
+      <div className="flex gap-4 items-center ml-auto py-2 ">
+        <Link href="/login" className="text-primary p-4 text-2xl rounded-md">
           <HiArrowRightEndOnRectangle />
         </Link>
       </div>

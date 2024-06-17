@@ -17,20 +17,16 @@ export default function UserMini({ session, user }: UserMiniProps) {
     <div
       className={`${
         show ? "right-0" : ""
-      } flex gap-4 items-center ml-auto py-2 px-4  fixed top-[150px] -right-[240px] bg-accent transition-all ease-in-out duration-300 rounded-l-md border border-primary/10`}
+      } flex gap-4 items-center ml-auto   bg-accent transition-all ease-in-out duration-300 rounded-l-md `}
       onClick={() => setShow((s) => !s)}
       onMouseEnter={() => setShow(true)}
       onMouseLeave={() => setShow(false)}
     >
-      <Avatar>
-        <AvatarImage src={user ? user?.icon : session?.user?.image} />
-        <AvatarFallback>IC</AvatarFallback>
-      </Avatar>
-
-      <div>
-        <p className="mb-2">
-          Welcome, <span>{user ? user.name : session?.user?.email} </span>
-        </p>
+      <div className="flex flex-col justify-center items-center gap-2">
+        <Avatar>
+          <AvatarImage src={user ? user?.icon : session?.user?.image} />
+          <AvatarFallback>IC</AvatarFallback>
+        </Avatar>
         {user && <Badge>{user.admin}</Badge>}
       </div>
 

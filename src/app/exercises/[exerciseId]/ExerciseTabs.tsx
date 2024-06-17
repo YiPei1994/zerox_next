@@ -19,7 +19,7 @@ export default function ExerciseTabs({ instructions }: ExerciseTabsProps) {
         {instructions &&
           instructions.map((step, i) => (
             <p className="text-sm mb-2" key={i}>
-              <span className="text-bold ">{i + 1}. </span> {step}
+              <span className="text-bold text-primary ">{i + 1}. </span> {step}
             </p>
           ))}
       </TabsContent>

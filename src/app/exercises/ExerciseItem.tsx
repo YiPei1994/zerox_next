@@ -1,10 +1,13 @@
+"use client";
 import ImageWraper from "@/components/ImageWrapper";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExerciseClient } from "@/types/types";
+import { GrPlan } from "react-icons/gr";
 
 import Link from "next/link";
 import { GrHelpBook } from "react-icons/gr";
+import { useExercisePlan } from "../store/ExercisePlanStore";
 
 type ExerciseItemProps = {
   exercise: ExerciseClient;
@@ -15,6 +18,8 @@ export default function ExerciseItem({ exercise }: ExerciseItemProps) {
   const imagePath = `/exercises/${name
     .replaceAll(" ", "_")
     .replaceAll("/", "_")}/images/0.jpg`;
+  const { exercises, addExercise } = useExercisePlan();
+  const exist = exercises.some((exercise) => exercise._id === _id);
   return (
     <div className="group px-4 py-4 flex flex-col gap-4">
       <ImageWraper
@@ -43,7 +48,7 @@ export default function ExerciseItem({ exercise }: ExerciseItemProps) {
             <Badge variant="secondary">{primaryMuscles}</Badge>
           </div>
         </div>
-        <div>
+        <div className="flex justify-between items-center">
           <Button className="w-min">
             <Link
               className="flex gap-4 items-center"
@@ -52,6 +57,14 @@ export default function ExerciseItem({ exercise }: ExerciseItemProps) {
               <GrHelpBook />
               <span>More Detail</span>{" "}
             </Link>
+          </Button>
+          <Button
+            onClick={() => addExercise(exercise)}
+            disabled={exist}
+            className="w-min flex gap-4 items-center"
+          >
+            <GrPlan />
+            <span>{exist ? "Added" : "Add to plan"}</span>{" "}
           </Button>
         </div>
       </div>
