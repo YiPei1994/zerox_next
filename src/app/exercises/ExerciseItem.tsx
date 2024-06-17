@@ -7,7 +7,7 @@ import { GrPlan } from "react-icons/gr";
 
 import Link from "next/link";
 import { GrHelpBook } from "react-icons/gr";
-import { useExercisePlan } from "../store/ExercisePlanStore";
+import { useExercisePlan } from "@/store/ExercisePlanStore";
 
 type ExerciseItemProps = {
   exercise: ExerciseClient;
@@ -36,12 +36,13 @@ export default function ExerciseItem({ exercise }: ExerciseItemProps) {
           <div className="flex gap-4 items-center">
             <span className="text-xs">Type: </span>
             <Badge variant="secondary">{force}</Badge>
-            <Badge variant="secondary">{level}</Badge>
-          </div>
-          <div className="flex gap-4 items-center">
-            <span className="text-xs">How: </span>
+
             <Badge variant="secondary">{equipment}</Badge>
             <Badge variant="secondary">{mechanic}</Badge>
+          </div>
+          <div className="flex gap-4 items-center">
+            <span className="text-xs">Diff: </span>
+            <Badge variant="secondary">{level}</Badge>
           </div>
           <div className="flex gap-4 items-center">
             <span className="text-xs">Muscles: </span>

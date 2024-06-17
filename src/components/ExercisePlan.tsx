@@ -10,25 +10,27 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "./ui/button";
-import { useExercisePlan } from "@/app/store/ExercisePlanStore";
+
 import { GrPlan } from "react-icons/gr";
 import { CiCircleRemove } from "react-icons/ci";
+import { useExercisePlan } from "@/store/ExercisePlanStore";
 
 export default function ExercisePlan() {
   const { exercises, removeExercise, emptyExercises } = useExercisePlan();
   return (
     <Drawer>
-      <DrawerTrigger>
-        {" "}
-        <div className="relative">
-          <GrPlan />
-          {exercises.length > 0 && (
-            <p className="absolute bg-accent text-sm top-4 -right-2 w-5 h-5 rounded-full text-primary">
+      {exercises.length > 0 && (
+        <DrawerTrigger>
+          {" "}
+          <div className="relative py-3 px-4 bg-primary text-accent rounded-l-md text-2xl border border-s-accent">
+            <GrPlan />
+
+            <p className="absolute bg-accent text-sm top-5 right-1 w-5 h-5 rounded-full text-primary">
               {exercises.length}
             </p>
-          )}
-        </div>
-      </DrawerTrigger>
+          </div>
+        </DrawerTrigger>
+      )}
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>Exercises</DrawerTitle>
