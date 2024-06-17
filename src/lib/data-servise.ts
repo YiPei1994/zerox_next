@@ -61,7 +61,7 @@ export const createUserGoogleAuth = async ({
 
 ////////////////////////////////////////////////// users end //////////////////////////////////////////////
 
-/////////////////////////////////////////////// products ////////////////////////////////////////////
+/////////////////////////////////////////////// Exercises ////////////////////////////////////////////
 export const getAllExercises = async () => {
   try {
     const res = await fetch(`${WEB_URL}/api/exercises`);
@@ -75,4 +75,19 @@ export const getAllExercises = async () => {
     console.error(err);
   }
 };
-///////////////////////////////////////////// products end /////////////////////////////////////////
+
+export const getExercises = async (id: string) => {
+  try {
+    const res = await fetch(`${WEB_URL}/api/exercises?id=${id}`);
+    if (!res.ok) {
+      throw new Error("problem fetching exercises");
+    }
+    const result = await res.json();
+    const data = result.data;
+    return data as ExerciseClient;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+///////////////////////////////////////////// Exercises end /////////////////////////////////////////

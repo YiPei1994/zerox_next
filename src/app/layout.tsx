@@ -27,10 +27,10 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <header className="relative">
+        <header className="relative min-h-[80px]">
           <Navigation />
         </header>
-        <main className="pt-[70px]">{children}</main>
+        {children}
       </body>
     </html>
   );

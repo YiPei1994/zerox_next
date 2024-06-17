@@ -31,7 +31,7 @@ export default function Navbar() {
       </li>
       <li
         className={`text-muted-foreground hover:text-primary flex  justify-center items-center ${
-          path.startsWith("/community") ? "text-primary" : ""
+          path.startsWith("/leaderboard") ? "text-primary" : ""
         }`}
       >
         <Link href="/leaderboard" className="flex gap-4">
