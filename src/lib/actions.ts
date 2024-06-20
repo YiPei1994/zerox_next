@@ -1,10 +1,11 @@
 "use server";
-import User, { IUser } from "@/models/user";
+import User from "@/models/user";
 import { signIn, signOut } from "./auth";
-import { correctPassword, hashAndSalt } from "./helpers";
-import { formSignInSchema, formSignUpSchema } from "./zodSchema";
-import { UserClient } from "@/types/types";
 import { findUserByEmail } from "./data-servise";
+import { correctPassword, createToken, hashAndSalt } from "./helpers";
+import { formSignInSchema, formSignUpSchema } from "./zodSchema";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 /////////////////////// auth /////////////////////////////////////////////////
 export async function userSignIn(formData: FormData) {
@@ -20,7 +21,7 @@ export async function userSignIn(formData: FormData) {
     // 2. find user and verify if user exists
 
     const user = await findUserByEmail(parsed.data.email);
-    console.log(user);
+
     if (!user) {
       throw new Error("User not found");
     }
@@ -28,10 +29,17 @@ export async function userSignIn(formData: FormData) {
     if (!(await correctPassword(parsed.data.password, user.password))) {
       throw new Error("Password is not match.");
     }
+
+    // 3. create token
+    const token = createToken(user._id);
+
+    // 4. set cookies
+    cookies().set("session", token, { httpOnly: true });
   } catch (err) {
     console.error(err);
     throw err;
   }
+  redirect("/account");
 }
 
 export async function userSignUp(formData: FormData) {
@@ -43,7 +51,7 @@ export async function userSignUp(formData: FormData) {
     if (!parsed.success) {
       throw new Error("Invalid form data.");
     }
-    console.log(parsed);
+
     // 2. hash password and create a user on server
     const hashPassword = await hashAndSalt(parsed.data.password);
     const email = parsed.data.email;
@@ -57,10 +65,21 @@ export async function userSignUp(formData: FormData) {
     if (!user) {
       throw new Error("Failed to create user.");
     }
+
+    const token = createToken(user._id);
+
+    // 4. set cookies
+    cookies().set("session", token, { httpOnly: true });
   } catch (err) {
     console.error(err);
     throw err;
   }
+  redirect("/accont");
+}
+
+export async function userSignOut() {
+  cookies().set("session", "");
+  redirect("/login");
 }
 
 export async function signInAction() {

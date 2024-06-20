@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { userSignIn } from "@/lib/actions";
 import { formSignInSchema } from "@/lib/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { redirect } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -32,7 +33,7 @@ export default function SignInForm() {
     const data = new FormData();
     data.append("email", values.email);
     data.append("password", values.password);
-    console.log(await userSignIn(data));
+    await userSignIn(data);
   }
 
   return (

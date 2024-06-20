@@ -30,7 +30,6 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const data = await req.json();
-    console.log(data);
 
     const session = await Session.create(data);
 

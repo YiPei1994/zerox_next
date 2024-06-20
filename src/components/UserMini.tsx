@@ -6,9 +6,10 @@ import { Session } from "next-auth";
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
+import UserSignOut from "@/app/login/UserSignOut";
 type UserMiniProps = {
-  session: Session;
-  user: UserClient;
+  session?: Session;
+  user: UserClient | undefined;
 };
 export default function UserMini({ session, user }: UserMiniProps) {
   const [show, setShow] = useState(false);
@@ -29,8 +30,7 @@ export default function UserMini({ session, user }: UserMiniProps) {
         </Avatar>
         {user && <Badge>{user.admin}</Badge>}
       </div>
-
-      <GoogleSignOut />
+      {session ? <GoogleSignOut /> : <UserSignOut />}
     </div>
   );
 }

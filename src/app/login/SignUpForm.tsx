@@ -14,6 +14,7 @@ import { userSignIn, userSignUp } from "@/lib/actions";
 
 import { formSignUpSchema } from "@/lib/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { redirect } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -73,7 +74,7 @@ export default function SignUpForm() {
             <FormItem>
               <FormLabel>Repeat password</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" type="password" {...field} />
+                <Input placeholder="password" type="password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
