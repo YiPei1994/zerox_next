@@ -1,3 +1,5 @@
+import { cookies } from "next/headers";
+
 export default function page() {
   return (
     <main className="grid grid-cols-5 grid-rows-5 gap-4 p-4">

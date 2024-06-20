@@ -1,5 +1,6 @@
 import { getAllExercises } from "@/lib/data-servise";
 import ExerciseItem from "./ExerciseItem";
+import { cookies } from "next/headers";
 
 export default async function ProductsPage() {
   const exercises = await getAllExercises();
