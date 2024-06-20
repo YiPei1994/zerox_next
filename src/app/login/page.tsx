@@ -1,7 +1,7 @@
 import GoogleSignIn from "./GoogleSignIn";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SignInForm from "./SignInForm";
-import SignUpForm from "./SignUpFrom";
+import SignUpForm from "./SignUpForm";
 
 export default function Loginpage() {
   return (

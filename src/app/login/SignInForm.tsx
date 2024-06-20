@@ -26,9 +26,18 @@ export default function SignInForm() {
     },
   });
 
+  async function onSubmit(values: z.infer<typeof formSignInSchema>) {
+    // ✅ This will be type-safe and validated.
+
+    const data = new FormData();
+    data.append("email", values.email);
+    data.append("password", values.password);
+    console.log(await userSignIn(data));
+  }
+
   return (
     <Form {...form}>
-      <form action={userSignIn} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
           name="email"
@@ -36,7 +45,7 @@ export default function SignInForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" type="email" {...field} />
+                <Input placeholder="email" type="email" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -49,7 +58,7 @@ export default function SignInForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" type="password" {...field} />
+                <Input placeholder="password" type="password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

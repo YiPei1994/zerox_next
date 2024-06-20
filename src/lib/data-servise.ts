@@ -11,7 +11,7 @@ export const findUserByEmail = async (
   try {
     const query = { email }; // Start with the email condition
 
-    const user = await User.findOne<IUser>(query); // Find one user matching both conditions (if password is provided)
+    const user = await User.findOne<IUser>(query).select("+password"); // Find one user matching both conditions (if password is provided)
     const data = JSON.parse(JSON.stringify(user));
     return data;
   } catch (err) {
@@ -59,13 +59,15 @@ export const createUserGoogleAuth = async ({
   email,
   name,
   icon,
+  createFrom,
 }: {
   email: string | undefined | null;
   name: string | undefined | null;
   icon: string | undefined | null;
+  createFrom: string;
 }) => {
   try {
-    const user = await User.create<IUser>({ email, name, icon });
+    const user = await User.create<IUser>({ email, name, icon, createFrom });
     return user;
   } catch (err) {
     console.error(err);

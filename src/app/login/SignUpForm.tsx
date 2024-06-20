@@ -10,14 +10,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useSignUp } from "@/lib/clientActions";
+import { userSignIn, userSignUp } from "@/lib/actions";
+
 import { formSignUpSchema } from "@/lib/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 export default function SignUpForm() {
-  const { signingUp } = useSignUp();
   const form = useForm<z.infer<typeof formSignUpSchema>>({
     resolver: zodResolver(formSignUpSchema),
     defaultValues: {
@@ -27,12 +27,14 @@ export default function SignUpForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSignUpSchema>) {
+  async function onSubmit(values: z.infer<typeof formSignUpSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    const email = values.email;
-    const password = values.password;
-    signingUp({ email, password });
+    const data = new FormData();
+    data.append("email", values.email);
+    data.append("password", values.password);
+    data.append("confirmPassword", values.confirmPassword);
+    await userSignUp(data);
   }
 
   return (
@@ -45,7 +47,7 @@ export default function SignUpForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" type="email" {...field} />
+                <Input placeholder="email" type="email" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -58,7 +60,7 @@ export default function SignUpForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" type="password" {...field} />
+                <Input placeholder="password" type="password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

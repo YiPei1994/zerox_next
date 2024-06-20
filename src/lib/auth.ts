@@ -23,6 +23,7 @@ const authConfig = {
             email: user.email,
             name: user.name,
             icon: user.image,
+            createFrom: "OAUTH",
           });
 
         return true;
