@@ -1,8 +1,6 @@
 import User, { IUser } from "@/models/user";
-import { WEB_URL } from "./constants";
-import { IExercise } from "@/models/exercise";
 import { ExerciseClient, UserClient } from "@/types/types";
-import { hashAndSalt } from "./helpers";
+import { WEB_URL } from "./constants";
 
 //////////////////////////////////////////////////////////////// users /////////////////////////////////////////////////////////////////////
 export const findUserByEmail = async (
@@ -37,7 +35,8 @@ export const createUserByEmail = async (
 ) => {
   try {
     const user = await User.create<IUser>({ email, password });
-    return user;
+    const data = JSON.parse(JSON.stringify(user));
+    return data as UserClient;
   } catch (err) {
     console.error(err);
   }

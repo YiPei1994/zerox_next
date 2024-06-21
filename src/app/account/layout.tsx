@@ -4,6 +4,6 @@ import { PropsWithChildren } from "react";
 
 export default async function accountLayout({ children }: PropsWithChildren) {
   const cookie = cookies().get("session")?.value;
-  if (!cookie) redirect("/");
+  if (!cookie) redirect("/login");
   return <div>{children}</div>;
 }

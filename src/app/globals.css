@@ -56,6 +56,9 @@
   body {
     @apply bg-background text-foreground;
   }
+  main {
+    padding: 20px;
+  }
 }
 
 @layer components {

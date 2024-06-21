@@ -2,6 +2,8 @@ import NextAuth, { Session, User } from "next-auth";
 import Google from "next-auth/providers/google";
 
 import { createUserGoogleAuth, getUserGoogleAuth } from "./data-servise";
+import { cookies } from "next/headers";
+import { createToken } from "./helpers";
 
 const authConfig = {
   providers: [
@@ -17,7 +19,8 @@ const authConfig = {
     async signIn({ user }: { user: User }) {
       try {
         const existingUser = await getUserGoogleAuth(user.email);
-
+        const token = createToken(String(existingUser?._id));
+        cookies().set("session", token);
         if (!existingUser)
           await createUserGoogleAuth({
             email: user.email,

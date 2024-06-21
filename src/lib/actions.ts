@@ -2,10 +2,21 @@
 import User from "@/models/user";
 import { signIn, signOut } from "./auth";
 import { findUserByEmail } from "./data-servise";
-import { correctPassword, createToken, hashAndSalt } from "./helpers";
-import { formSignInSchema, formSignUpSchema } from "./zodSchema";
+import {
+  correctPassword,
+  createToken,
+  hashAndSalt,
+  resetPasswordToken,
+  sendEmail,
+} from "./helpers";
+import {
+  formForgotPasswordSchema,
+  formSignInSchema,
+  formSignUpSchema,
+} from "./zodSchema";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { WEB_PASSWORD_RESET_URL } from "./constants";
 
 /////////////////////// auth /////////////////////////////////////////////////
 export async function userSignIn(formData: FormData) {
@@ -74,8 +85,45 @@ export async function userSignUp(formData: FormData) {
     console.error(err);
     throw err;
   }
-  redirect("/accont");
+  redirect("/account");
 }
+
+export const userForgotPassword = async (formData: FormData) => {
+  try {
+    const data = Object.fromEntries(formData);
+    // 1. always do serverr validation here
+    const parsed = formForgotPasswordSchema.safeParse(data);
+
+    if (!parsed.success) {
+      throw new Error("Invalid form data.");
+    }
+
+    const email = String(parsed.data.email);
+    // 2. generate reset token for db and  email
+    const token = resetPasswordToken();
+
+    const user = await User.findOneAndUpdate(
+      { email: email },
+      { passwordResetToken: token }
+    );
+
+    if (!user) {
+      throw new Error("Invalid email provided.");
+    }
+    console.log(user);
+    // 3. send email to user with reset token
+    const message = `Forgot your password? Go to: ${WEB_PASSWORD_RESET_URL}/${token} and submit your new password to reset your password.\nIf you didn't forget your password, please ignore this email!`;
+
+    await sendEmail({
+      toEmail: email,
+      subject: "your password reset token",
+      message,
+    });
+    console.log("mail sent");
+  } catch (err) {
+    throw err;
+  }
+};
 
 export async function userSignOut() {
   cookies().set("session", "");

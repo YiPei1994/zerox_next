@@ -9,6 +9,7 @@ export interface IUser extends Document {
   admin: string;
   icon: string;
   createdAt: string;
+  passwordResetToken: string;
 }
 
 const userSchema: Schema = new Schema({
@@ -37,6 +38,10 @@ const userSchema: Schema = new Schema({
     type: Date,
     default: Date.now(),
     select: false,
+  },
+  passwordResetToken: {
+    type: String,
+    default: null,
   },
 });
 
