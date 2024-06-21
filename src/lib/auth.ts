@@ -21,13 +21,16 @@ const authConfig = {
         const existingUser = await getUserGoogleAuth(user.email);
         const token = createToken(String(existingUser?._id));
         cookies().set("session", token);
-        if (!existingUser)
-          await createUserGoogleAuth({
+        if (!existingUser) {
+          const newUser = await createUserGoogleAuth({
             email: user.email,
             name: user.name,
             icon: user.image,
             createFrom: "OAUTH",
           });
+          const token = createToken(String(newUser?._id));
+          cookies().set("session", token);
+        }
 
         return true;
       } catch {

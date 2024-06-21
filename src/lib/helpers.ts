@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const crypto = require("crypto");
+import crypto from "crypto";
 const nodemailer = require("nodemailer");
 
 export const hashAndSalt = async (password: string) => {
@@ -24,9 +24,8 @@ export function verifyToken(token: string) {
   return jwt.verify(token, process.env.JWT_SECRET);
 }
 
-export function resetPasswordToken() {
-  const resetToken = crypto.randomBytes(32).toString("hex");
-  return crypto.createHash("sha256").update(resetToken).digest("hex");
+export function hashResetToken(token: string) {
+  return crypto.createHash("sha256").update(token).digest("hex");
 }
 
 type MailOptions = {

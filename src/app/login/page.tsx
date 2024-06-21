@@ -7,7 +7,7 @@ import { HiArrowSmallRight } from "react-icons/hi2";
 
 export default function Loginpage() {
   return (
-    <main className="flex-1 flex justify-center items-center flex-col">
+    <div className="flex-1 flex justify-center items-center flex-col">
       <Tabs
         defaultValue="signIn"
         className="w-full py-4 mb-4 border-t border-b "
@@ -33,6 +33,6 @@ export default function Loginpage() {
         </Link>
         <GoogleSignIn />
       </div>
-    </main>
+    </div>
   );
 }

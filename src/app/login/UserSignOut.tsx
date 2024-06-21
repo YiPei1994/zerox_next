@@ -1,4 +1,4 @@
-import { userSignOut } from "@/lib/actions";
+import { userSignOut } from "@/lib/actions/auth";
 import { HiArrowRightStartOnRectangle } from "react-icons/hi2";
 
 function UserSignOut() {

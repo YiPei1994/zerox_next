@@ -10,13 +10,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { userSignIn } from "@/lib/actions";
+import { useToast } from "@/components/ui/use-toast";
+import { userSignIn } from "@/lib/actions/auth";
+
 import { formSignInSchema } from "@/lib/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 export default function SignInForm() {
+  const { toast } = useToast();
+  const router = useRouter();
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSignInSchema>>({
     resolver: zodResolver(formSignInSchema),
@@ -32,7 +37,13 @@ export default function SignInForm() {
     const data = new FormData();
     data.append("email", values.email);
     data.append("password", values.password);
-    await userSignIn(data);
+    const { status, message } = await userSignIn(data);
+
+    toast({
+      title: status,
+      description: message,
+    });
+    router.push("/account");
   }
 
   return (
@@ -64,7 +75,9 @@ export default function SignInForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={form.formState.isSubmitting}>
+          {form.formState.isSubmitSuccessful ? "Success" : "Log In"}{" "}
+        </Button>
       </form>
     </Form>
   );

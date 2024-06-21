@@ -10,15 +10,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { userSignIn, userSignUp } from "@/lib/actions";
+import { useToast } from "@/components/ui/use-toast";
+import { userSignUp } from "@/lib/actions/auth";
 
 import { formSignUpSchema } from "@/lib/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 export default function SignUpForm() {
+  const { toast } = useToast();
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSignUpSchema>>({
     resolver: zodResolver(formSignUpSchema),
     defaultValues: {
@@ -35,7 +38,13 @@ export default function SignUpForm() {
     data.append("email", values.email);
     data.append("password", values.password);
     data.append("confirmPassword", values.confirmPassword);
-    await userSignUp(data);
+    const { status, message } = await userSignUp(data);
+
+    toast({
+      title: status,
+      description: message,
+    });
+    router.push("/account");
   }
 
   return (
@@ -72,7 +81,7 @@ export default function SignUpForm() {
           name="confirmPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Repeat password</FormLabel>
+              <FormLabel>Confirm password</FormLabel>
               <FormControl>
                 <Input placeholder="password" type="password" {...field} />
               </FormControl>
@@ -80,7 +89,10 @@ export default function SignUpForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+
+        <Button type="submit" disabled={form.formState.isSubmitting}>
+          {form.formState.isSubmitSuccessful ? "Success" : "Submit"}{" "}
+        </Button>
       </form>
     </Form>
   );

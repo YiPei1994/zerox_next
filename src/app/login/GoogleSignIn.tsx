@@ -1,4 +1,4 @@
-import { signInAction } from "@/lib/actions";
+import { signInAction } from "@/lib/actions/auth";
 import Image from "next/image";
 
 async function GoogleSignIn() {

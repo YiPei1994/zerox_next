@@ -2,7 +2,7 @@ import Link from "next/link";
 
 function NotFound() {
   return (
-    <main className="text-center space-y-6 mt-4 flex flex-col items-center min-h-[50vh] justify-center">
+    <div className="text-center space-y-6 mt-4 flex flex-col items-center min-h-[50vh] justify-center">
       <h1 className="text-3xl font-semibold">
         This page could not be found :(
       </h1>
@@ -12,7 +12,7 @@ function NotFound() {
       >
         Go back home
       </Link>
-    </main>
+    </div>
   );
 }
 

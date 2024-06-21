@@ -1,4 +1,4 @@
-import { signOutAction } from "@/lib/actions";
+import { signOutAction } from "@/lib/actions/auth";
 import { HiArrowRightStartOnRectangle } from "react-icons/hi2";
 
 function GoogleSignOut() {
