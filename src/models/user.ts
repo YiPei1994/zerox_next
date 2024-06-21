@@ -20,12 +20,15 @@ const userSchema: Schema = new Schema({
   },
   password: {
     type: String,
+    default: null,
   },
   name: {
     type: String,
+    default: null,
   },
   createFrom: {
     type: String,
+    default: null,
   },
   admin: {
     type: String,
@@ -33,6 +36,7 @@ const userSchema: Schema = new Schema({
   },
   icon: {
     type: String,
+    default: null,
   },
   createdAt: {
     type: Date,

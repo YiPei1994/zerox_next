@@ -1,16 +1,26 @@
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 import { cookies } from "next/headers";
 
 export default function page() {
+  const token = cookies().get("session")?.value;
+
   return (
-    <div className="grid grid-cols-5 grid-rows-5 gap-4 p-4">
-      <header className="col-span-full row-span-1 bg-red">
+    <div>
+      <header className="col-span-full row-span-1">
         <h4 className="text-bold text-2xl">Account settings</h4>
         <span className="text-foreground text-sm">
           Manage your account settings and set preferences.
         </span>
       </header>
-      <aside className="col-span-1 row-span-4 bg-green">sideNav</aside>
-      <div className="col-span-4 row-span-4 bg-green">body</div>
+      <Tabs>
+        <TabsList>
+          <TabsTrigger value="profile">Profile settings</TabsTrigger>
+          <TabsTrigger value="password">Password settings</TabsTrigger>
+        </TabsList>
+        <TabsContent value="profile"></TabsContent>
+        <TabsContent value="password"></TabsContent>
+      </Tabs>
     </div>
   );
 }
