@@ -9,6 +9,7 @@ export interface IUser extends Document {
   icon: string;
   createdAt: string;
   passwordResetToken: string;
+  active: boolean;
 }
 
 const userSchema: Schema = new Schema({
@@ -43,6 +44,10 @@ const userSchema: Schema = new Schema({
     type: String,
     default: null,
     select: false,
+  },
+  active: {
+    type: Boolean,
+    default: true,
   },
 });
 

@@ -2,7 +2,7 @@ export type UserClient = {
   _id: string | undefined;
   email: string;
   name: string;
-  admin: string;
+  role: string;
   icon: string;
 };
 

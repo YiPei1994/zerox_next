@@ -28,7 +28,6 @@ export default function UserMini({ session, user }: UserMiniProps) {
           <AvatarImage src={user ? user?.icon : session?.user?.image} />
           <AvatarFallback>IC</AvatarFallback>
         </Avatar>
-        {user && <Badge>{user.admin}</Badge>}
       </div>
       {session ? <GoogleSignOut /> : <UserSignOut />}
     </div>
