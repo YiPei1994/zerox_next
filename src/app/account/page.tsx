@@ -8,6 +8,7 @@ import { verifyToken } from "@/lib/helpers";
 import { findUserById } from "@/lib/data-servise";
 import { Suspense } from "react";
 import Spinner from "@/components/ui/Spinner";
+import UserPasswordForm from "./UserPasswordForm";
 
 export default async function page() {
   // read avatars
@@ -41,7 +42,9 @@ export default async function page() {
             <UserProfileForm avatars={avatarFiles} user={user} />
           </Suspense>
         </TabsContent>
-        <TabsContent value="password"></TabsContent>
+        <TabsContent value="password">
+          <UserPasswordForm oldPasswordHash={user.password} />
+        </TabsContent>
       </Tabs>
     </div>
   );

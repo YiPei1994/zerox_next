@@ -62,3 +62,20 @@ export const formUserDataSchema = object({
   name: string({}),
   icon: string({}),
 });
+
+export const formUserPasswordSchema = object({
+  oldPassword: string(),
+  password: string({ required_error: "Password is required" })
+    .min(1, "Password is required")
+    .min(8, "Password must be more than 8 characters")
+    .max(32, "Password must be less than 32 characters"),
+  confirmPassword: string({ required_error: "The passwords did not match" }),
+}).superRefine(({ confirmPassword, password }, ctx) => {
+  if (confirmPassword !== password) {
+    ctx.addIssue({
+      code: "custom",
+      message: "The passwords did not match",
+      path: ["confirmPassword"],
+    });
+  }
+});

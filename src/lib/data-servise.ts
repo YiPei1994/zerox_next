@@ -21,7 +21,7 @@ export const findUserById = async (id: string | undefined | null | unknown) => {
   try {
     // Start with the email condition
 
-    const user = await User.findById<IUser>(id); // Find one user matching both conditions (if password is provided)
+    const user = await User.findById<IUser>(id).select("+password"); // Find one user matching both conditions (if password is provided)
     const data = JSON.parse(JSON.stringify(user));
     return data as UserClient;
   } catch (err) {

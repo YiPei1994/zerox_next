@@ -4,6 +4,9 @@ export type UserClient = {
   name: string;
   role: string;
   icon: string;
+  password: string;
+  passwordResetToken: string;
+  active: boolean;
 };
 
 export type ExerciseClient = {
