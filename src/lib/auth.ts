@@ -26,7 +26,6 @@ const authConfig = {
             email: user.email,
             name: user.name,
             icon: user.image,
-            createFrom: "OAUTH",
           });
           const token = createToken(String(newUser?._id));
           cookies().set("session", token);

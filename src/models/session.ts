@@ -11,7 +11,7 @@ type Exercise = {
 
 export interface ISession extends Document {
   _id: Types.ObjectId;
-  user_id: string;
+  userId: Types.ObjectId;
   createdAt: Date;
   updatedAt?: Date;
   exercises: Exercise[];
@@ -20,9 +20,10 @@ export interface ISession extends Document {
 }
 
 const sessionSchema: Schema = new Schema({
-  user_id: {
-    type: String,
+  userId: {
+    type: Schema.ObjectId,
     required: true,
+    ref: "User",
   },
   exercises: {
     type: [Schema.Types.Mixed], // Flexible schema for exercises

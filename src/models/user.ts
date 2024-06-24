@@ -5,8 +5,7 @@ export interface IUser extends Document {
   email: string;
   password: string;
   name: string;
-  createFrom: string;
-  admin: string;
+  role: string;
   icon: string;
   createdAt: string;
   passwordResetToken: string;
@@ -21,16 +20,13 @@ const userSchema: Schema = new Schema({
   password: {
     type: String,
     default: null,
+    select: false,
   },
   name: {
     type: String,
     default: null,
   },
-  createFrom: {
-    type: String,
-    default: null,
-  },
-  admin: {
+  role: {
     type: String,
     default: "user",
   },
@@ -46,6 +42,7 @@ const userSchema: Schema = new Schema({
   passwordResetToken: {
     type: String,
     default: null,
+    select: false,
   },
 });
 

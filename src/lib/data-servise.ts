@@ -58,15 +58,13 @@ export const createUserGoogleAuth = async ({
   email,
   name,
   icon,
-  createFrom,
 }: {
   email: string | undefined | null;
   name: string | undefined | null;
   icon: string | undefined | null;
-  createFrom: string;
 }) => {
   try {
-    const user = await User.create<IUser>({ email, name, icon, createFrom });
+    const user = await User.create<IUser>({ email, name, icon });
     return user;
   } catch (err) {
     console.error(err);

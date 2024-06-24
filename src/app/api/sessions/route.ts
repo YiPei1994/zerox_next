@@ -7,7 +7,12 @@ export async function GET(req: NextRequest) {
     const sessionId = req.nextUrl.searchParams.get("id");
     if (sessionId) {
       const session = JSON.parse(
-        JSON.stringify(await Session.findById(sessionId))
+        JSON.stringify(
+          await Session.findById(sessionId).populate({
+            path: "userId",
+            select: "-__v",
+          })
+        )
       );
 
       return NextResponse.json({
@@ -15,7 +20,14 @@ export async function GET(req: NextRequest) {
         data: session,
       });
     } else {
-      const sessions = JSON.parse(JSON.stringify(await Session.find()));
+      const sessions = JSON.parse(
+        JSON.stringify(
+          await Session.find().populate({
+            path: "userId",
+            select: "-__v",
+          })
+        )
+      );
       return NextResponse.json({
         status: "success",
         results: sessions.length,
