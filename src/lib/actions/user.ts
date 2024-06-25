@@ -86,3 +86,26 @@ export const userUpdatePassword = async (formData: FormData) => {
     };
   }
 };
+
+export const userDeleteAccount = async () => {
+  try {
+    // 1. get logged user
+    const cookie = cookies().get("session")?.value;
+    if (!cookie) {
+      throw new Error("No login found, please relog.");
+    }
+    const { id } = verifyToken(cookie);
+    await User.findByIdAndUpdate(id, { active: false });
+
+    revalidatePath("/login");
+    return { status: "success", message: "" };
+  } catch (error) {
+    console.error("Error during user deactivating request:", error); // Log error for debugging
+
+    // Return a generic error message to avoid revealing sensitive details
+    return {
+      status: "fail",
+      message: "An error occurred. Please try again later.",
+    };
+  }
+};

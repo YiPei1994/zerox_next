@@ -47,7 +47,7 @@ export async function userSignIn(formData: FormData) {
     // 2. Find user by email
     const user = await findUserByEmail(parsed.data.email);
 
-    if (!user) {
+    if (!user || !user.active) {
       throw new Error(
         "Invalid email or password. Please check your credentials."
       ); // More informative message

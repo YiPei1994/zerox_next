@@ -14,7 +14,7 @@ export const correctPassword = async (
   return await bcrypt.compare(candidatePass, userPass);
 };
 
-export function createToken(id: string) {
+export function createToken(id: string | undefined) {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRESIN,
   });

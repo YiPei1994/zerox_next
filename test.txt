@@ -1,0 +1,13 @@
+MONGO_URI=mongodb+srv://ypdomaci:651588@freecluster.xbgbwlr.mongodb.net/test?retryWrites=true&w=majority&appName=freeCluster
+
+NEXTAUTH_SECRET=a95a1ab3fa25545e5bad0e226ac5c6fe
+
+NEXTAUTH_URL=http://localhost:3000/
+
+AUTH_GOOGLE_ID=36230481903-coartir0jfhgr6bj3bnjc0p4f6786tbu.apps.googleusercontent.com
+
+AUTH_GOOGLE_SECRET=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
+
+JWT_SECRET=jLF6ZHO7siZ8yeQeTAn5AaKxVg7ZzAg0
+JWT_EXPIRESIN=90d
+

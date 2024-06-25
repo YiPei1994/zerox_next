@@ -27,6 +27,10 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { MdOutlineEdit } from "react-icons/md";
+import { Separator } from "@/components/ui/separator";
+import UserDeleteAccountForm from "./UserDeleteAccountForm";
+
 type UserProfileFormProps = {
   user: UserClient;
   avatars: string[];
@@ -40,14 +44,14 @@ export default function UserProfileForm({
 
   const { email, name, icon, role } = user;
 
-  const [userIcon, setUserIcon] = useState(icon);
+  const [userIcon, setUserIcon] = useState(icon || "/avatars/Avatar01.svg");
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formUserDataSchema>>({
     resolver: zodResolver(formUserDataSchema),
     defaultValues: {
       email,
-      name,
+      name: name || "",
       icon: userIcon,
     },
   });
@@ -75,10 +79,12 @@ export default function UserProfileForm({
         <ImageWrapper
           name="user icon"
           className="w-1/4 h-auto mx-auto rounded-full my-4"
-          imagePath={userIcon ? userIcon : "/avatars/Avatar01.svg"}
+          imagePath={userIcon ? userIcon : ""}
         />
         <Popover>
-          <PopoverTrigger>Change</PopoverTrigger>
+          <PopoverTrigger>
+            Change <MdOutlineEdit className="inline " />
+          </PopoverTrigger>
           <PopoverContent>
             <div className="flex flex-wrap gap-4 justify-center items-center">
               {avatars.map((avatar) => (
@@ -138,6 +144,9 @@ export default function UserProfileForm({
           </Button>
         </form>
       </Form>
+
+      <Separator className="my-6" />
+      <UserDeleteAccountForm />
     </>
   );
 }
