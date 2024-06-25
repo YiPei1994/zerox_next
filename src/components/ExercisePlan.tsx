@@ -57,11 +57,10 @@ export default function ExercisePlan() {
         </DrawerHeader>
         <DrawerFooter className="flex justify-around items-center flex-row">
           <Button>Save</Button>
-          <DrawerClose>
-            <Button onClick={() => emptyExercises()} variant="outline">
-              Empty
-            </Button>
-          </DrawerClose>
+
+          <Button onClick={() => emptyExercises()} variant="outline" asChild>
+            <DrawerClose>Empty</DrawerClose>
+          </Button>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

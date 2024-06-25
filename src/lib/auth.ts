@@ -1,9 +1,8 @@
-import NextAuth, { Session, User } from "next-auth";
+import NextAuth, { Session, User as userType } from "next-auth";
 import Google from "next-auth/providers/google";
-
-import { createUserGoogleAuth, getUserGoogleAuth } from "./data-servise";
 import { cookies } from "next/headers";
 import { createToken } from "./helpers";
+import User from "@/models/user";
 
 const authConfig = {
   providers: [
@@ -16,13 +15,13 @@ const authConfig = {
     authorized({ auth, request }: { auth: Session | null; request: Request }) {
       return !!auth?.user;
     },
-    async signIn({ user }: { user: User }) {
+    async signIn({ user }: { user: userType }) {
       try {
-        const existingUser = await getUserGoogleAuth(user.email);
+        const existingUser = await User.findOne({ email: user.email });
         const token = createToken(String(existingUser?._id));
         cookies().set("session", token);
         if (!existingUser) {
-          const newUser = await createUserGoogleAuth({
+          const newUser = await User.create({
             email: user.email,
             name: user.name,
             icon: user.image,

@@ -1,15 +1,16 @@
 import ImageWrapper from "@/components/ImageWrapper";
-import { getExercises } from "@/lib/data-servise";
+
 import ExerciseInfo from "./ExerciseInfo";
 import ExerciseTabs from "./ExerciseTabs";
 import ExerciseImageCarousel from "./ExerciseImageCarousel";
+import { getExercise } from "@/lib/actions/exercise";
 
 export default async function page({
   params,
 }: {
   params: { exerciseId: string };
 }) {
-  const exercise = await getExercises(params.exerciseId);
+  const exercise = await getExercise(params.exerciseId);
   if (!exercise) return;
 
   const { name, instructions } = exercise;

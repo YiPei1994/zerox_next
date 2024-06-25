@@ -57,3 +57,7 @@ export const sendEmail = async (options: MailOptions) => {
   // 3) Actually send the email
   await transport.sendMail(mailOptions);
 };
+
+export const bsonParser = (data: any) => {
+  return JSON.parse(JSON.stringify(data));
+};

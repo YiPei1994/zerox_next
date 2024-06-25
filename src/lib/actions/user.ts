@@ -3,9 +3,25 @@
 import User from "@/models/user";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
-import { findUserById } from "../data-servise";
-import { correctPassword, hashAndSalt, verifyToken } from "../helpers";
+import {
+  bsonParser,
+  correctPassword,
+  hashAndSalt,
+  verifyToken,
+} from "../helpers";
 import { formUserDataSchema, formUserPasswordSchema } from "../zodSchema";
+import { UserClient } from "@/types/types";
+
+export const verifyUserFromCookie = async () => {
+  const cookie = cookies().get("session")?.value;
+  if (!cookie) {
+    return;
+  }
+  const { id } = verifyToken(cookie);
+  const userData = await User.findById(id).select("+password");
+  const user: UserClient = bsonParser(userData);
+  return user;
+};
 
 export const userUpdateData = async (formData: FormData) => {
   try {
@@ -49,12 +65,7 @@ export const userUpdatePassword = async (formData: FormData) => {
     }
 
     // 2. get logged user
-    const cookie = cookies().get("session")?.value;
-    if (!cookie) {
-      throw new Error("No login found, please relog.");
-    }
-    const { id } = verifyToken(cookie);
-    const user = await findUserById(id);
+    const user: UserClient | undefined = await verifyUserFromCookie();
 
     // 3. check if oldpassowrd is correct
 
@@ -73,7 +84,7 @@ export const userUpdatePassword = async (formData: FormData) => {
 
     const hashPass = await hashAndSalt(parsed.data.password);
 
-    await User.findByIdAndUpdate(id, { password: hashPass });
+    await User.findByIdAndUpdate(user?._id, { password: hashPass });
 
     return { status: "success", message: "User password updated!" };
   } catch (error) {

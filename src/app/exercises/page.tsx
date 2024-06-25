@@ -1,4 +1,4 @@
-import { getAllExercises } from "@/lib/data-servise";
+import { getAllExercises } from "@/lib/actions/exercise";
 import ExerciseItem from "./ExerciseItem";
 import { cookies } from "next/headers";
 

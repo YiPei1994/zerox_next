@@ -1,13 +1,14 @@
 "use server";
 
-import User from "@/models/user";
+import User, { IUser } from "@/models/user";
+import { UserClient } from "@/types/types";
 import crypto from "crypto";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { signIn, signOut } from "../auth";
 import { WEB_PASSWORD_RESET_URL } from "../constants";
-import { findUserByEmail } from "../data-servise";
 import {
+  bsonParser,
   correctPassword,
   createToken,
   hashAndSalt,
@@ -45,7 +46,11 @@ export async function userSignIn(formData: FormData) {
     }
 
     // 2. Find user by email
-    const user = await findUserByEmail(parsed.data.email);
+
+    const userData = await User.findOne<IUser>({
+      email: parsed.data.email,
+    }).select("+password");
+    const user: UserClient = bsonParser(userData);
 
     if (!user || !user.active) {
       throw new Error(
@@ -107,7 +112,7 @@ export async function userSignUp(formData: FormData) {
       createdFrom: "email",
     };
 
-    const user = await User.create(newUser);
+    const user: UserClient = await User.create(newUser);
 
     if (!user) {
       throw new Error("Failed to create user. Please try again."); // More informative message
@@ -155,7 +160,7 @@ export const userForgotPassword = async (formData: FormData) => {
     const passwordResetToken = crypto.randomBytes(32).toString("hex");
     const hashedToken = hashResetToken(passwordResetToken);
 
-    const user = await User.findOneAndUpdate(
+    const user: UserClient | null = await User.findOneAndUpdate(
       { email },
       { passwordResetToken: hashedToken }
     );

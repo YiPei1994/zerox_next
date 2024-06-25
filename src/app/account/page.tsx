@@ -5,19 +5,19 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cookies } from "next/headers";
 import UserProfileForm from "./UserProfileForm";
 import { verifyToken } from "@/lib/helpers";
-import { findUserById } from "@/lib/data-servise";
+
 import { Suspense } from "react";
 import Spinner from "@/components/ui/Spinner";
 import UserPasswordForm from "./UserPasswordForm";
+import User from "@/models/user";
+import { verifyUserFromCookie } from "@/lib/actions/user";
 
 export default async function page() {
   // read avatars
   const avatarsDirectory = path.join(process.cwd(), "public", "avatars");
   const avatarFiles = fs.readdirSync(avatarsDirectory);
-  const token = cookies().get("session")?.value;
-  if (!token) return;
-  const { id } = verifyToken(token);
-  const user = await findUserById(id);
+
+  const user = await verifyUserFromCookie();
   if (!user) return;
   return (
     <div>

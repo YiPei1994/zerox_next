@@ -51,7 +51,7 @@ export default function ResetPasswordForm({
       title: status,
       description: message,
     });
-    router.push("/login");
+    //router.push("/login");
   }
 
   return (
