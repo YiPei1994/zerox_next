@@ -12,6 +12,20 @@ import {
 import { formUserDataSchema, formUserPasswordSchema } from "../zodSchema";
 import { UserClient } from "@/types/types";
 
+export const userAuthenticated = async () => {
+  const cookie = cookies().get("session")?.value;
+  if (!cookie) {
+    return false;
+  }
+  const { id } = verifyToken(cookie);
+  const userData = await User.findById(id).select("+password");
+  const user: UserClient = bsonParser(userData);
+  if (!user) {
+    return false;
+  }
+  return true;
+};
+
 export const verifyUserFromCookie = async () => {
   const cookie = cookies().get("session")?.value;
   if (!cookie) {

@@ -2,21 +2,18 @@ import { Document, Schema, model, models, Types } from "mongoose";
 
 type Exercise = {
   name: string;
-  sets: number;
-  reps: number;
-  weight?: number[]; // Optional field for weighted exercises
-  unit: string;
-  muscleGroup?: string[]; // Optional array of muscle groups targeted
+  sets?: number[];
+  reps?: number[];
+  unit?: string; // optional field for
+  duration?: number; // Optional minutes
 };
 
 export interface ISession extends Document {
   _id: Types.ObjectId;
   userId: Types.ObjectId;
   createdAt: Date;
-  updatedAt?: Date;
   exercises: Exercise[];
-  duration?: number; // Optional field for session duration in minutes
-  notes?: string; // Optional field for session notes
+  notes: string; // Optional field for session notes
 }
 
 const sessionSchema: Schema = new Schema({
@@ -24,6 +21,9 @@ const sessionSchema: Schema = new Schema({
     type: Schema.ObjectId,
     required: true,
     ref: "User",
+  },
+  notes: {
+    type: String,
   },
   exercises: {
     type: [Schema.Types.Mixed], // Flexible schema for exercises
@@ -37,17 +37,6 @@ const sessionSchema: Schema = new Schema({
     type: Date,
     default: Date.now,
     select: false, // Exclude from query results by default
-  },
-  updatedAt: {
-    type: Date,
-    default: undefined, // Optional for tracking updates
-  },
-  duration: {
-    type: Number,
-    min: 0, // Enforce non-negative duration
-  },
-  notes: {
-    type: String,
   },
 });
 

@@ -21,7 +21,7 @@ export default function ExerciseItem({ exercise }: ExerciseItemProps) {
   const { exercises, addExercise } = useExercisePlan();
   const exist = exercises.some((exercise) => exercise._id === _id);
   return (
-    <div className="group px-4 py-4 flex flex-col gap-4">
+    <div className="group flex flex-col gap-4">
       <ImageWraper
         name={name}
         imagePath={imagePath}

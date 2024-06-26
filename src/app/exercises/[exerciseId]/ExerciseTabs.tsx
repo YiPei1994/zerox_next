@@ -8,7 +8,7 @@ export default function ExerciseTabs({ instructions }: ExerciseTabsProps) {
   return (
     <Tabs
       defaultValue="instructions"
-      className="px-6 py-4 max-w-[95%] mx-auto overflow-auto"
+      className="py-4 max-w-[95%] mx-auto overflow-auto"
     >
       <TabsList>
         <TabsTrigger value="instructions">Instructions</TabsTrigger>

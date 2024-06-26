@@ -22,6 +22,7 @@ export default function ImageWrapper({
         fill
         src={imagePath}
         alt={name}
+        priority
         className={cn(`object-cover object-center`, imageClassName)}
       />
     </div>

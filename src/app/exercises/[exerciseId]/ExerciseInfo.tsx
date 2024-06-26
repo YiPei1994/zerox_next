@@ -15,7 +15,7 @@ export default function ExerciseInfo({ exercise }: ExerciseInfoProps) {
     secondaryMuscles,
   } = exercise;
   return (
-    <div className="px-8 py-4 flex flex-col gap-2">
+    <div className="px-4 flex flex-col gap-2">
       <h4 className="font-bold text-3xl text-primary">{name}</h4>
       <p className="border-b pb-2 text-sm ">
         <span className="font-bold">Exercise: </span> {force}, {mechanic},{" "}

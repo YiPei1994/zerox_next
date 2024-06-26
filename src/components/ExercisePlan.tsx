@@ -3,20 +3,23 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "./ui/button";
 
-import { GrPlan } from "react-icons/gr";
-import { CiCircleRemove } from "react-icons/ci";
 import { useExercisePlan } from "@/store/ExercisePlanStore";
+import { CiCircleRemove } from "react-icons/ci";
+import { GrPlan } from "react-icons/gr";
+import { Input } from "./ui/input";
+import { Textarea } from "./ui/textarea";
+import { createSession } from "@/lib/actions/session";
 
 export default function ExercisePlan() {
   const { exercises, removeExercise, emptyExercises } = useExercisePlan();
+  const exerciseNames = exercises.map((exer) => exer.name);
+
   return (
     <Drawer>
       {exercises.length > 0 && (
@@ -33,18 +36,32 @@ export default function ExercisePlan() {
       )}
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Exercises</DrawerTitle>
-          <DrawerDescription>
-            {exercises.map((exercise) => (
+          <DrawerTitle>Exercise Plan</DrawerTitle>
+        </DrawerHeader>
+        <form
+          className="p-4 mx-auto w-full flex flex-col gap-4"
+          action={createSession}
+          method="POST"
+        >
+          <Input
+            placeholder="Insert name or note for this session."
+            name="note"
+            defaultValue=""
+            type="text"
+          />
+          <input
+            type="hidden"
+            name="exercises"
+            defaultValue={JSON.stringify(exerciseNames)}
+          />
+          <div className="my-4 flex w-full  px-4 flex-col gap-3">
+            {exercises.map((exercise, i) => (
               <div
-                className="my-4 flex w-full justify-between items-center px-4"
+                className="flex gap-2 items-center justify-between"
                 key={exercise._id}
               >
-                <div className="flex gap-2">
-                  <span className="font-bold">{exercise.name}</span>/
-                  <span>{exercise.force}</span>/
-                  <span>{exercise.primaryMuscles[0]} </span>{" "}
-                </div>
+                <span>{exercise.name}</span>/
+                <span>{exercise.primaryMuscles[0]} </span>{" "}
                 <button
                   className="text-xl text-primary"
                   onClick={() => removeExercise(exercise._id!)}
@@ -53,15 +70,14 @@ export default function ExercisePlan() {
                 </button>
               </div>
             ))}
-          </DrawerDescription>
-        </DrawerHeader>
-        <DrawerFooter className="flex justify-around items-center flex-row">
-          <Button>Save</Button>
-
-          <Button onClick={() => emptyExercises()} variant="outline" asChild>
-            <DrawerClose>Empty</DrawerClose>
-          </Button>
-        </DrawerFooter>
+          </div>
+          <div className="flex justify-around">
+            <Button type="submit">Submit</Button>
+            <Button asChild type="reset" onClick={() => emptyExercises()}>
+              <DrawerClose>Empty</DrawerClose>
+            </Button>
+          </div>
+        </form>
       </DrawerContent>
     </Drawer>
   );
