@@ -29,13 +29,17 @@ export interface ExerciseData {
     name: string;
     category: string;
   };
-  weights: string[];
-  reps: string[];
+  setsData: {
+    reps: number;
+    weight: number;
+  }[];
   unit: string;
+  sets: number;
 }
+
 export interface SessionData {
   _id: string;
-  user: string;
+  userId: string; // Changed from 'user' to 'userId' to match the schema
   note: string;
   exercises: ExerciseData[];
   createdAt: string;

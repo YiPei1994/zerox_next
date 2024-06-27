@@ -1,6 +1,32 @@
 import { Schema, model, models } from "mongoose";
 
-const sessionSchema: Schema = new Schema({
+const setsDataSchema = new Schema(
+  {
+    reps: {
+      type: Number,
+    },
+    weight: {
+      type: Number,
+    },
+  },
+  { _id: false }
+); // This prevents _id creation for setsData objects
+
+const exerciseSchema = new Schema(
+  {
+    exerciseId: {
+      type: Schema.ObjectId,
+      required: true,
+      ref: "Exercise",
+    },
+    setsData: [setsDataSchema],
+    unit: String,
+    sets: Number,
+  },
+  { _id: false }
+); // This prevents _id creation for exercise objects
+
+const sessionSchema = new Schema({
   userId: {
     type: Schema.ObjectId,
     required: true,
@@ -9,18 +35,7 @@ const sessionSchema: Schema = new Schema({
   note: {
     type: String,
   },
-  exercises: [
-    {
-      exerciseId: {
-        type: Schema.ObjectId,
-        required: true,
-        ref: "Exercise",
-      },
-      weights: [String],
-      reps: [String],
-      unit: String,
-    },
-  ],
+  exercises: [exerciseSchema],
   createdAt: {
     type: Date,
     default: Date.now,

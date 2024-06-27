@@ -72,3 +72,43 @@ export const getSessionsForPage = async (page: number = 1) => {
     throw error;
   }
 };
+
+export const updateSessionExercise = async (formData: FormData) => {
+  // parse data
+  const data = Object.fromEntries(formData);
+  const setsData = {
+    exerciseId: data.exerciseId,
+    sets: parseInt(data.sets as string),
+    unit: data.unit,
+    setsData: JSON.parse(String(data.setsData)),
+  };
+
+  console.log(setsData);
+
+  // check if user is authenticated
+  const user = await verifyUserFromCookie();
+
+  if (!user) {
+    throw new Error("User not authenticated");
+  }
+
+  // find the right session and update the specific exercise
+  const session = await Session.findOneAndUpdate(
+    {
+      _id: data.id,
+      "exercises.exerciseId": data.exerciseId,
+    },
+    {
+      $set: {
+        "exercises.$": setsData,
+      },
+    },
+    { new: true } // This option returns the updated document
+  );
+
+  if (!session) {
+    throw new Error("Session not found or exercise not in session");
+  }
+
+  console.log(session);
+};

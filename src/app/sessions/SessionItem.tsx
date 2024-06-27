@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { updateSessionExercise } from "@/lib/actions/session";
 import { ExerciseData } from "@/types/types";
 import { useEffect } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
@@ -43,17 +44,15 @@ export default function SessionItem({ sessionExercise, id }: SessionItemProps) {
     }
   }, [setsCount, fields.length, append, remove]);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data: any) => {
     const formData = new FormData();
     formData.append("id", id);
     formData.append("exerciseId", exerciseId._id);
     formData.append("sets", data.sets);
     formData.append("unit", data.unit);
-    formData.append("exercises", JSON.stringify(data.exercises));
+    formData.append("setsData", JSON.stringify(data.exercises));
 
-    // Send formData to server
-    // Example: await fetch('/api/update-session', { method: 'POST', body: formData });
-    console.log(Object.fromEntries(formData));
+    await updateSessionExercise(formData);
   };
 
   return (

@@ -10,23 +10,25 @@ import {
 type SessionListProps = {
   sessions: SessionData[];
 };
-export default function SesstionList({ sessions }: SessionListProps) {
+
+export default function SessionList({ sessions }: SessionListProps) {
   return (
-    <Accordion type="single" collapsible className="w-full">
+    <>
       {sessions.map((session) => (
-        <AccordionItem key={session._id} value={session._id}>
-          <AccordionTrigger>{session.note}</AccordionTrigger>
-          <AccordionContent>
-            {session.exercises.map((exe) => (
-              <SessionItem
-                key={exe.exerciseId._id}
-                id={session._id}
-                sessionExercise={exe}
-              />
-            ))}
-          </AccordionContent>
-        </AccordionItem>
+        <div className="mb-12" key={session._id}>
+          <h4 className="text-2xl font-bold">{session.note}</h4>
+          {session.exercises.map((exe) => (
+            <Accordion key={exe.exerciseId._id} type="single" collapsible>
+              <AccordionItem value={exe.exerciseId._id}>
+                <AccordionTrigger>{exe.exerciseId.name}</AccordionTrigger>
+                <AccordionContent>
+                  <SessionItem id={session._id} sessionExercise={exe} />
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          ))}
+        </div>
       ))}
-    </Accordion>
+    </>
   );
 }
