@@ -18,7 +18,11 @@ export default function SesstionList({ sessions }: SessionListProps) {
           <AccordionTrigger>{session.note}</AccordionTrigger>
           <AccordionContent>
             {session.exercises.map((exe) => (
-              <SessionItem key={exe.exerciseId._id} sessionExercise={exe} />
+              <SessionItem
+                key={exe.exerciseId._id}
+                id={session._id}
+                sessionExercise={exe}
+              />
             ))}
           </AccordionContent>
         </AccordionItem>
