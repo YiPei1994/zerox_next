@@ -22,3 +22,22 @@ export type ExerciseClient = {
   category: string;
   createdAt: string;
 };
+
+export interface ExerciseData {
+  exerciseId: {
+    _id: string;
+    name: string;
+    category: string;
+  };
+  weights: string[];
+  reps: string[];
+  unit: string;
+}
+export interface SessionData {
+  _id: string;
+  user: string;
+  note: string;
+  exercises: ExerciseData[];
+  createdAt: string;
+  active: boolean;
+}

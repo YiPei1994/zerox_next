@@ -19,7 +19,7 @@ const authConfig = {
       try {
         const existingUser = await User.findOne({ email: user.email });
         const token = createToken(String(existingUser?._id));
-        cookies().set("session", token);
+        cookies().set("session", token, { httpOnly: true });
         if (!existingUser) {
           const newUser = await User.create({
             email: user.email,
@@ -27,7 +27,7 @@ const authConfig = {
             icon: user.image,
           });
           const token = createToken(String(newUser?._id));
-          cookies().set("session", token);
+          cookies().set("session", token, { httpOnly: true });
         }
 
         return true;

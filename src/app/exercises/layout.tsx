@@ -1,5 +1,5 @@
-import ExercisePlan from "@/components/ExercisePlan";
 import { PropsWithChildren } from "react";
+import ExercisePlan from "./ExercisePlan";
 
 export default function Exerciselayout({ children }: PropsWithChildren) {
   return (

@@ -7,19 +7,22 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Button } from "./ui/button";
+import { Button } from "../../components/ui/button";
 
+import { createSession } from "@/lib/actions/session";
 import { useExercisePlan } from "@/store/ExercisePlanStore";
 import { CiCircleRemove } from "react-icons/ci";
 import { GrPlan } from "react-icons/gr";
-import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
-import { createSession } from "@/lib/actions/session";
+import { Input } from "../../components/ui/input";
 
 export default function ExercisePlan() {
   const { exercises, removeExercise, emptyExercises } = useExercisePlan();
-  const exerciseNames = exercises.map((exer) => exer.name);
+  const exerciseIds = exercises.map((exer) => exer._id);
 
+  const handleSubmit = async (formData: FormData) => {
+    await createSession(formData);
+    emptyExercises();
+  };
   return (
     <Drawer>
       {exercises.length > 0 && (
@@ -40,7 +43,7 @@ export default function ExercisePlan() {
         </DrawerHeader>
         <form
           className="p-4 mx-auto w-full flex flex-col gap-4"
-          action={createSession}
+          action={handleSubmit}
           method="POST"
         >
           <Input
@@ -52,7 +55,7 @@ export default function ExercisePlan() {
           <input
             type="hidden"
             name="exercises"
-            defaultValue={JSON.stringify(exerciseNames)}
+            defaultValue={JSON.stringify(exerciseIds)}
           />
           <div className="my-4 flex w-full  px-4 flex-col gap-3">
             {exercises.map((exercise, i) => (
@@ -73,7 +76,12 @@ export default function ExercisePlan() {
           </div>
           <div className="flex justify-around">
             <Button type="submit">Submit</Button>
-            <Button asChild type="reset" onClick={() => emptyExercises()}>
+            <Button
+              asChild
+              type="reset"
+              variant="secondary"
+              onClick={() => emptyExercises()}
+            >
               <DrawerClose>Empty</DrawerClose>
             </Button>
           </div>

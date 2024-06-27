@@ -1,20 +1,4 @@
-import { Document, Schema, model, models, Types } from "mongoose";
-
-type Exercise = {
-  name: string;
-  sets?: number[];
-  reps?: number[];
-  unit?: string; // optional field for
-  duration?: number; // Optional minutes
-};
-
-export interface ISession extends Document {
-  _id: Types.ObjectId;
-  userId: Types.ObjectId;
-  createdAt: Date;
-  exercises: Exercise[];
-  notes: string; // Optional field for session notes
-}
+import { Schema, model, models } from "mongoose";
 
 const sessionSchema: Schema = new Schema({
   userId: {
@@ -22,24 +6,32 @@ const sessionSchema: Schema = new Schema({
     required: true,
     ref: "User",
   },
-  notes: {
+  note: {
     type: String,
   },
-  exercises: {
-    type: [Schema.Types.Mixed], // Flexible schema for exercises
-    required: true,
-    validate: {
-      validator: (exercises: Exercise[]) => exercises.length > 0,
-      message: "At least one exercise is required per session.",
+  exercises: [
+    {
+      exerciseId: {
+        type: Schema.ObjectId,
+        required: true,
+        ref: "Exercise",
+      },
+      weights: [String],
+      reps: [String],
+      unit: String,
     },
-  },
+  ],
   createdAt: {
     type: Date,
     default: Date.now,
     select: false, // Exclude from query results by default
   },
+  active: {
+    type: Boolean,
+    default: true,
+  },
 });
 
-const Session = models.Session || model<ISession>("Session", sessionSchema);
+const Session = models.Session || model("Session", sessionSchema);
 
 export default Session;

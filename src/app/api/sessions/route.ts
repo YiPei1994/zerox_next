@@ -42,13 +42,13 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const data = await req.json();
-
-    const session = await Session.create(data);
+    console.log(data);
+    /*   const session = await Session.create(data);
 
     return NextResponse.json({
       status: "success",
       data: session,
-    });
+    }); */
   } catch (err: any) {
     return NextResponse.json({ error: err.message });
   }
