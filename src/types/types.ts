@@ -23,16 +23,17 @@ export type ExerciseClient = {
   createdAt: string;
 };
 
+export type setData = {
+  reps: number;
+  weight: number;
+};
 export interface ExerciseData {
   exerciseId: {
     _id: string;
     name: string;
     category: string;
   };
-  setsData: {
-    reps: number;
-    weight: number;
-  }[];
+  setsData: setData[];
   unit: string;
   sets: number;
 }

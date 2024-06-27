@@ -1,11 +1,13 @@
 import { SessionData } from "@/types/types";
-import SessionItem from "./SessionItem";
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import SessionItemForm from "./SessionItemForm";
+import SessionItemData from "./SessionItemData";
 
 type SessionListProps = {
   sessions: SessionData[];
@@ -22,8 +24,9 @@ export default function SessionList({ sessions }: SessionListProps) {
               <AccordionItem value={exe.exerciseId._id}>
                 <AccordionTrigger>{exe.exerciseId.name}</AccordionTrigger>
                 <AccordionContent>
-                  <SessionItem id={session._id} sessionExercise={exe} />
+                  <SessionItemForm id={session._id} exerciseData={exe} />
                 </AccordionContent>
+                <SessionItemData exerciseData={exe} />
               </AccordionItem>
             </Accordion>
           ))}
