@@ -12,8 +12,6 @@ export default function ExerciseTabs({ instructions }: ExerciseTabsProps) {
     >
       <TabsList>
         <TabsTrigger value="instructions">Instructions</TabsTrigger>
-        <TabsTrigger value="performance">Performance</TabsTrigger>
-        <TabsTrigger value="statistic">Statistic</TabsTrigger>
       </TabsList>
       <TabsContent value="instructions">
         {instructions &&
@@ -23,10 +21,6 @@ export default function ExerciseTabs({ instructions }: ExerciseTabsProps) {
             </p>
           ))}
       </TabsContent>
-      <TabsContent value="performance">
-        Change your performance here.
-      </TabsContent>
-      <TabsContent value="statistic">Change your statistic here.</TabsContent>
     </Tabs>
   );
 }

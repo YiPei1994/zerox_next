@@ -10,7 +10,7 @@ export type UserClient = {
 };
 
 export type ExerciseClient = {
-  _id: string | undefined;
+  _id: string;
   name: string;
   force: string;
   level: string;
@@ -28,11 +28,7 @@ export type setData = {
   weight: number;
 };
 export interface ExerciseData {
-  exerciseId: {
-    _id: string;
-    name: string;
-    category: string;
-  };
+  exerciseId: ExerciseClient;
   setsData: setData[];
   unit: string;
   sets: number;

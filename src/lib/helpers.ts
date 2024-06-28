@@ -62,7 +62,3 @@ export const sendEmail = async (options: MailOptions) => {
 export const bsonParser = (data: any) => {
   return JSON.parse(JSON.stringify(data));
 };
-
-export const formatDate = (date: string) => {
-  return format(parseISO(date), "dd.MM.yyyy");
-};

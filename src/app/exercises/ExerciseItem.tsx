@@ -56,7 +56,7 @@ export default function ExerciseItem({ exercise }: ExerciseItemProps) {
               href={`/exercises/${_id}`}
             >
               <GrHelpBook />
-              <span>More Detail</span>{" "}
+              <span>More detail</span>{" "}
             </Link>
           </Button>
           <Button

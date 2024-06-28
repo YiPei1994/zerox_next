@@ -105,6 +105,34 @@ export const getActiveSessions = async () => {
   }
 };
 
+export const getUserSession = async (id: string) => {
+  try {
+    // 1. get logged user
+    const user = await verifyUserFromCookie();
+
+    if (!user) {
+      throw new Error("User not authenticated");
+    }
+
+    // 2. pagination
+
+    const sessions = await Session.findOne({
+      _id: id,
+      userId: user._id,
+    }).populate({
+      path: "exercises.exerciseId",
+    });
+
+    // 3. Parse the result (if necessary)
+    const parsed: SessionData = bsonParser(sessions);
+
+    return parsed;
+  } catch (error) {
+    console.error("Error fetching sessions:", error);
+    throw error;
+  }
+};
+
 export const updateSessionExercise = async (formData: FormData) => {
   try {
     // parse data
@@ -166,6 +194,7 @@ export const completeSession = async (id: string, active: boolean) => {
     }
 
     await Session.findByIdAndUpdate(id, { active });
+
     revalidatePath("/sessions");
     return { status: "success", message: "Success" };
   } catch (error) {

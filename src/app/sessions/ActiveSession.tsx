@@ -15,7 +15,9 @@ export default async function SessionList() {
     <>
       {sessions.map((session) => (
         <div className="p-4 bg-secondary rounded-md" key={session._id}>
+          <h4 className="text-center font-bold my-4">Active session:</h4>
           <SessionItemHeader session={session} />
+
           {session.exercises.map((exe) => (
             <Accordion key={exe.exerciseId._id} type="single" collapsible>
               <AccordionItem value={exe.exerciseId._id}>

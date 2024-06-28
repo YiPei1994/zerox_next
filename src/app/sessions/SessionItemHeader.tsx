@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { completeSession, deleteSession } from "@/lib/actions/session";
 import { SessionData } from "@/types/types";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { CiSquareCheck } from "react-icons/ci";
 import { RiDeleteBin4Line } from "react-icons/ri";
@@ -23,11 +24,13 @@ type SessionItemHeaderProps = {
 };
 export default function SessionItemHeader({ session }: SessionItemHeaderProps) {
   const { toast } = useToast();
+  const queryClient = useQueryClient();
   async function handleComplete() {
     const { status, message } = await completeSession(
       session._id,
       !session.active
     );
+    queryClient.invalidateQueries({ queryKey: ["sessions"] });
     toast({
       title: status,
       description: message,

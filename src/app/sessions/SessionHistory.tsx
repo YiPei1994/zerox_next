@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/pagination";
 import { getSessionsForPage } from "@/lib/actions/session";
 import { PAGE_LIMIT } from "@/lib/constants";
-import { formatDate } from "@/lib/helpers";
 import { useSessionStore } from "@/store/SessionStore";
 import { useQuery } from "@tanstack/react-query";
 import { format, parseISO } from "date-fns";
@@ -30,7 +29,7 @@ export default function SessionHistory() {
 
   return (
     <div className="flex flex-col gap-4">
-      <h4 className="text-center font-bold">Recent Sessions:</h4>
+      <h4 className="text-center font-bold">Recent sessions:</h4>
       <ul className="py-4">
         {sessions?.map((session) => (
           <li
