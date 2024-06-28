@@ -1,28 +1,27 @@
-import { SessionData } from "@/types/types";
-
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import SessionItemForm from "./SessionItemForm";
+import { getActiveSessions } from "@/lib/actions/session";
 import SessionItemData from "./SessionItemData";
+import SessionItemForm from "./SessionItemForm";
+import SessionItemHeader from "./SessionItemHeader";
 
-type SessionListProps = {
-  sessions: SessionData[];
-};
-
-export default function SessionList({ sessions }: SessionListProps) {
+export default async function SessionList() {
+  const sessions = await getActiveSessions();
   return (
     <>
       {sessions.map((session) => (
-        <div className="mb-12" key={session._id}>
-          <h4 className="text-2xl font-bold">{session.note}</h4>
+        <div className="p-4 bg-secondary rounded-md" key={session._id}>
+          <SessionItemHeader session={session} />
           {session.exercises.map((exe) => (
             <Accordion key={exe.exerciseId._id} type="single" collapsible>
               <AccordionItem value={exe.exerciseId._id}>
-                <AccordionTrigger>{exe.exerciseId.name}</AccordionTrigger>
+                <AccordionTrigger className="font-bold text-md">
+                  {exe.exerciseId.name}
+                </AccordionTrigger>
                 <AccordionContent>
                   <SessionItemForm id={session._id} exerciseData={exe} />
                 </AccordionContent>

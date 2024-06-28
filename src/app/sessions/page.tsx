@@ -1,11 +1,11 @@
-import { getSessionsForPage } from "@/lib/actions/session";
-import SesstionList from "./SesstionList";
+import SesstionList from "./ActiveSession";
+import SessionHistory from "./SessionHistory";
 
 export default async function page() {
-  const sessions = await getSessionsForPage();
   return (
     <div>
-      <SesstionList sessions={sessions} />
+      <SesstionList />
+      <SessionHistory />
     </div>
   );
 }

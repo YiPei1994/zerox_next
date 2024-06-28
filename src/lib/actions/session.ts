@@ -54,6 +54,7 @@ export const getSessionsForPage = async (page: number = 1) => {
     // 3. read limited sessions belongs to user
     const sessions = await Session.find({
       userId: user._id,
+      active: false,
     })
       .populate({
         path: "exercises.exerciseId",
@@ -62,6 +63,35 @@ export const getSessionsForPage = async (page: number = 1) => {
       .sort("-createdAt")
       .skip(skip)
       .limit(PAGE_LIMIT);
+
+    // 3. Parse the result (if necessary)
+    const parsed: SessionData[] = bsonParser(sessions);
+
+    return parsed;
+  } catch (error) {
+    console.error("Error fetching sessions:", error);
+    throw error;
+  }
+};
+
+export const getActiveSessions = async () => {
+  try {
+    // 1. get logged user
+    const user = await verifyUserFromCookie();
+
+    if (!user) {
+      throw new Error("User not authenticated");
+    }
+
+    // 2. pagination
+
+    const sessions = await Session.find({
+      userId: user._id,
+      active: true,
+    }).populate({
+      path: "exercises.exerciseId",
+      select: "name category",
+    });
 
     // 3. Parse the result (if necessary)
     const parsed: SessionData[] = bsonParser(sessions);
@@ -83,8 +113,6 @@ export const updateSessionExercise = async (formData: FormData) => {
       unit: data.unit,
       setsData: JSON.parse(String(data.setsData)),
     };
-
-    console.log(setsData);
 
     // check if user is authenticated
     const user = await verifyUserFromCookie();
@@ -111,10 +139,71 @@ export const updateSessionExercise = async (formData: FormData) => {
       throw new Error("Session not found or exercise not in session");
     }
 
-    console.log(session);
     revalidatePath("/sessions");
   } catch (error) {
     console.error(error);
     throw error;
+  }
+};
+
+export const completeSession = async (id: string, active: boolean) => {
+  try {
+    // verify if user is logged in
+    const user = await verifyUserFromCookie();
+
+    if (!user) {
+      throw new Error("User not authenticated");
+    }
+
+    // check if session belongs to same user
+    const sessionData = await Session.findById<SessionData>(id);
+    const session = bsonParser(sessionData);
+
+    if (session?.userId !== user._id) {
+      throw new Error("This session does not belong to same user.");
+    }
+
+    await Session.findByIdAndUpdate(id, { active });
+    revalidatePath("/sessions");
+    return { status: "success", message: "Success" };
+  } catch (error) {
+    console.error("Error during user completing session:", error); // Log error for debugging
+
+    // Return a generic error message to avoid revealing sensitive details
+    return {
+      status: "fail",
+      message: "An error occurred. Please try again later.",
+    };
+  }
+};
+
+export const deleteSession = async (id: string) => {
+  try {
+    // verify if user is logged in
+    const user = await verifyUserFromCookie();
+
+    if (!user) {
+      throw new Error("User not authenticated");
+    }
+
+    // check if session belongs to same user
+    const sessionData = await Session.findById<SessionData>(id);
+    const session = bsonParser(sessionData);
+
+    if (session?.userId !== user._id) {
+      throw new Error("This session does not belong to same user.");
+    }
+
+    await Session.findByIdAndDelete(id);
+    revalidatePath("/sessions");
+    return { status: "success", message: "Success" };
+  } catch (error) {
+    console.error("Error during user deleting session:", error); // Log error for debugging
+
+    // Return a generic error message to avoid revealing sensitive details
+    return {
+      status: "fail",
+      message: "An error occurred. Please try again later.",
+    };
   }
 };

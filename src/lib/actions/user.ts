@@ -32,6 +32,7 @@ export const verifyUserFromCookie = async () => {
     return;
   }
   const { id } = verifyToken(cookie);
+
   const userData = await User.findById(id).select("+password");
   const user: UserClient = bsonParser(userData);
   return user;

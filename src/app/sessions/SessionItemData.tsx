@@ -13,13 +13,13 @@ export default function SessionItemData({
       {setsData.map((data, i) => (
         <li
           key={i}
-          className="flex gap-4 w-full justify-between items-center pb-2 mx-auto text-center"
+          className="flex gap-4 w-full justify-between items-center pb-3 mx-auto text-center text-sm"
         >
           <span className="w-[20%]">Set {i + 1}</span>{" "}
-          <span className="w-[10%]"> -</span>
-          <span className="w-[30%]">{data.reps} repeats</span>
-          <span className="w-[10%]"> X</span>{" "}
-          <span className="w-[30%]">
+          <span className="w-[5%]"> -</span>
+          <span className="w-[35%]">{data.reps} reps</span>
+          <span className="w-[5%]"> X</span>{" "}
+          <span className="w-[35%]">
             {data.weight} {unit}
           </span>{" "}
         </li>
