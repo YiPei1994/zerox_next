@@ -39,7 +39,7 @@ export const createSession = async (formData: FormData) => {
   redirect("/sessions");
 };
 
-export const getSessionsForPage = async (page: number = 1) => {
+export const getSessionsForPage = async (page: number) => {
   try {
     // 1. get logged user
     const user = await verifyUserFromCookie();
@@ -51,11 +51,13 @@ export const getSessionsForPage = async (page: number = 1) => {
     // 2. pagination
 
     const skip = (page - 1) * PAGE_LIMIT;
+
     // 3. read limited sessions belongs to user
     const sessions = await Session.find({
       userId: user._id,
       active: false,
     })
+      .select("+createdAt")
       .populate({
         path: "exercises.exerciseId",
         select: "name category",

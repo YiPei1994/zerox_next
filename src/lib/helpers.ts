@@ -1,7 +1,8 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-import crypto from "crypto";
 const nodemailer = require("nodemailer");
+import crypto from "crypto";
+import { format, parseISO } from "date-fns";
 
 export const hashAndSalt = async (password: string) => {
   return await bcrypt.hash(password, 12);
@@ -60,4 +61,8 @@ export const sendEmail = async (options: MailOptions) => {
 
 export const bsonParser = (data: any) => {
   return JSON.parse(JSON.stringify(data));
+};
+
+export const formatDate = (date: string) => {
+  return format(parseISO(date), "dd.MM.yyyy");
 };

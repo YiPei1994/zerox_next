@@ -1,16 +1,11 @@
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import fs from "fs";
 import path from "path";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { cookies } from "next/headers";
 import UserProfileForm from "./UserProfileForm";
-import { verifyToken } from "@/lib/helpers";
 
-import { Suspense } from "react";
-import Spinner from "@/components/ui/Spinner";
-import UserPasswordForm from "./UserPasswordForm";
-import User from "@/models/user";
 import { verifyUserFromCookie } from "@/lib/actions/user";
+import UserPasswordForm from "./UserPasswordForm";
 
 export default async function page() {
   // read avatars
@@ -38,9 +33,7 @@ export default async function page() {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="profile">
-          <Suspense fallback={<Spinner />}>
-            <UserProfileForm avatars={avatarFiles} user={user} />
-          </Suspense>
+          <UserProfileForm avatars={avatarFiles} user={user} />
         </TabsContent>
         <TabsContent value="password">
           <UserPasswordForm oldPasswordHash={user.password} />

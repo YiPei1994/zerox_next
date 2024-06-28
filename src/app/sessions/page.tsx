@@ -3,7 +3,7 @@ import SessionHistory from "./SessionHistory";
 
 export default async function page() {
   return (
-    <div>
+    <div className="flex flex-col gap-8">
       <SesstionList />
       <SessionHistory />
     </div>

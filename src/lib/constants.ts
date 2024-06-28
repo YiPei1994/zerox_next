@@ -3,4 +3,4 @@ export const WEB_URL = "http://localhost:3000";
 export const WEB_PASSWORD_RESET_URL =
   "http://localhost:3000/login/forgotPassword";
 
-export const PAGE_LIMIT = 3;
+export const PAGE_LIMIT = 10;

@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navigation from "@/components/Navigation";
 import { Toaster } from "@/components/ui/toaster";
+import Providers from "@/lib/reactQueryProvider";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -28,12 +29,14 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <header className="relative min-h-[80px]">
-          <Navigation />
-        </header>
-        <main>{children}</main>
+        <Providers>
+          <header className="relative min-h-[80px]">
+            <Navigation />
+          </header>
+          <main>{children}</main>
 
-        <Toaster />
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );
