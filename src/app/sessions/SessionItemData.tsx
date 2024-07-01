@@ -9,7 +9,7 @@ export default function SessionItemData({
   const { setsData, unit } = exerciseData;
 
   return (
-    <ul>
+    <ul className="px-4">
       {setsData.map((data, i) => (
         <li
           key={i}

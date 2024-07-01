@@ -11,11 +11,18 @@ import SessionItemHeader from "./SessionItemHeader";
 
 export default async function SessionList() {
   const sessions = await getActiveSessions();
+  console.log(sessions.length);
   return (
     <>
+      {sessions.length === 0 && (
+        <p className="mx-auto my-4 text-2xl font-bold">
+          No active session, please create one.
+        </p>
+      )}
       {sessions.map((session) => (
         <div className="p-4 bg-secondary rounded-md" key={session._id}>
           <h4 className="text-center font-bold my-4">Active session:</h4>
+
           <SessionItemHeader session={session} />
 
           {session.exercises.map((exe) => (
