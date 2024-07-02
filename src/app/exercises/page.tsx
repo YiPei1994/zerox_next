@@ -1,15 +1,17 @@
-import { getAllExercises } from "@/lib/actions/exercise";
-import ExerciseItem from "./ExerciseItem";
-import { cookies } from "next/headers";
+import ExerciseFilter from "./ExerciseFilter";
+import ExercisesList from "./ExercisesList";
 
-export default async function ProductsPage() {
-  const exercises = await getAllExercises();
+export default async function ProductsPage({
+  searchParams,
+}: {
+  searchParams: { category: string };
+}) {
+  const filter = searchParams.category ?? "all";
 
   return (
     <div>
-      {exercises?.map((exercises) => (
-        <ExerciseItem key={exercises._id} exercise={exercises} />
-      ))}
+      <ExerciseFilter />
+      <ExercisesList filter={filter} />
     </div>
   );
 }

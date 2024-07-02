@@ -17,10 +17,14 @@ export default function ExerciseInfo({ exercise }: ExerciseInfoProps) {
   return (
     <div className="px-4 flex flex-col gap-2">
       <h4 className="font-bold text-3xl text-primary">{name}</h4>
-      <p className="border-b pb-2 text-sm ">
-        <span className="font-bold">Exercise: </span> {force}, {mechanic},{" "}
-        {equipment}
-      </p>
+      <div className="border-b pb-2 text-sm ">
+        <span className="font-bold">Exercise: </span>{" "}
+        <ul>
+          <li>{force} </li>
+          <li>{mechanic}</li>
+          <li> {equipment}</li>
+        </ul>
+      </div>
 
       <p className="border-b pb-2 text-sm">
         <span className="font-bold">Difficulity:</span> {level}
