@@ -11,7 +11,7 @@ import SessionItemHeader from "./SessionItemHeader";
 
 export default async function SessionList() {
   const sessions = await getActiveSessions();
-  console.log(sessions.length);
+
   return (
     <>
       {sessions.length === 0 && (
