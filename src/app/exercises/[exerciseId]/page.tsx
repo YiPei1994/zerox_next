@@ -1,10 +1,17 @@
-import ImageWrapper from "@/components/ImageWrapper";
-
+import NavBack from "@/components/NavBack";
+import { getExercise } from "@/lib/actions/exercise";
+import { Metadata } from "next";
+import ExerciseImageCarousel from "./ExerciseImageCarousel";
 import ExerciseInfo from "./ExerciseInfo";
 import ExerciseTabs from "./ExerciseTabs";
-import ExerciseImageCarousel from "./ExerciseImageCarousel";
-import { getExercise } from "@/lib/actions/exercise";
-import NavBack from "@/components/NavBack";
+
+export const metadata: Metadata = {
+  title: {
+    template: "%s : The Exercise Note",
+    default: "Zerox : The Exercise Note",
+  },
+  description: "Personal exercise data recording note.",
+};
 
 export default async function page({
   params,

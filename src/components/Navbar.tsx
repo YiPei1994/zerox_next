@@ -3,11 +3,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaUser } from "react-icons/fa";
 import { GiWeightLiftingUp } from "react-icons/gi";
-import { PiRankingFill } from "react-icons/pi";
+
 import { VscGraph } from "react-icons/vsc";
 
-export default function Navbar() {
+export default function Navbar({ session }: { session: string | undefined }) {
   const path = usePathname();
+
   return (
     <ul className="flex gap-10 py-6 ">
       <li
@@ -21,7 +22,9 @@ export default function Navbar() {
         </Link>
       </li>
       <li
-        className={`text-muted-foreground hover:text-primary flex  justify-center items-center ${
+        className={`${
+          !session ? "hidden" : ""
+        } text-muted-foreground hover:text-primary flex  justify-center items-center ${
           path.startsWith("/sessions") ? "text-primary" : ""
         }`}
       >
@@ -30,16 +33,7 @@ export default function Navbar() {
           <span className="max-md:hidden">Sessions</span>{" "}
         </Link>
       </li>
-      <li
-        className={`text-muted-foreground hover:text-primary flex  justify-center items-center ${
-          path.startsWith("/leaderboard") ? "text-primary" : ""
-        }`}
-      >
-        <Link href="/leaderboard" className="flex gap-4">
-          <PiRankingFill className="text-2xl" />
-          <span className="max-md:hidden">Leader Board</span>{" "}
-        </Link>
-      </li>
+
       <li
         className={`text-muted-foreground hover:text-primary flex  justify-center items-center ${
           path.startsWith("/account") ? "text-primary" : ""

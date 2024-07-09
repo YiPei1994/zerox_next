@@ -15,7 +15,7 @@ export default async function UserMini() {
           <AvatarFallback>IC</AvatarFallback>
         </Avatar>
       </div>
-      {user ? <GoogleSignOut /> : <UserSignOut />}
+      <UserSignOut />
     </div>
   );
 }
