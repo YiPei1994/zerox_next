@@ -41,10 +41,17 @@ export const sendEmail = async (options: MailOptions) => {
     host: "sandbox.smtp.mailtrap.io",
     port: 2525,
     auth: {
-      user: "b6d17a06f998b3",
-      pass: "dc3d34fae22ddd",
+      user: process.env.MAILTRAP_USER,
+      pass: process.env.MAILTRAP_PASS,
     },
   });
+  /*   const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_APP_PASSWORD,
+    },
+  }); */
 
   // 2) Define the email options
   const mailOptions = {

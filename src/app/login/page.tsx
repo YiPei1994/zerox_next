@@ -4,6 +4,7 @@ import SignInForm from "./SignInForm";
 import SignUpForm from "./SignUpForm";
 import Link from "next/link";
 import { HiArrowSmallRight } from "react-icons/hi2";
+import TestCret from "./TestCret";
 
 export default function Loginpage() {
   return (
@@ -18,6 +19,7 @@ export default function Loginpage() {
         </TabsList>
         <TabsContent value="signIn">
           <SignInForm />
+          <TestCret />
         </TabsContent>
         <TabsContent value="signUp">
           <SignUpForm />
