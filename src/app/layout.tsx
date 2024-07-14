@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="max-w-[420px] mx-auto">
+    <html lang="en">
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased flex flex-col",

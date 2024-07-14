@@ -1,6 +1,7 @@
 // In Next.js, this file would be called: app/providers.jsx
 "use client";
 
+import ScreenLimiter from "@/components/ScreenLimiter";
 // Since QueryClientProvider relies on useContext under the hood, we have to put 'use client' on top
 import {
   isServer,
@@ -45,6 +46,8 @@ export default function Providers({ children }: PropsWithChildren) {
   const queryClient = getQueryClient();
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      <ScreenLimiter>{children}</ScreenLimiter>
+    </QueryClientProvider>
   );
 }
